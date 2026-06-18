@@ -1,8 +1,8 @@
-# KnowledgeForge – AI-Powered Knowledge Retrieval Platform
+# KnowledgeForge – AI-Powered Knowledge Retrieval & Course Generation Platform
 
-KnowledgeForge is a scalable content extraction and knowledge retrieval platform built with Node.js, Express, PostgreSQL, Axios, Puppeteer, JSDOM, and Mozilla Readability.
+KnowledgeForge is a scalable knowledge retrieval and AI-powered course generation platform built with Node.js, Express.js, PostgreSQL, Gemini AI, Axios, Puppeteer, JSDOM, and Mozilla Readability.
 
-The platform automatically collects technical content from documentation websites, extracts readable knowledge, stores it in a structured knowledge base, categorizes articles, and provides search capabilities for future AI-powered learning, course generation, and Retrieval-Augmented Generation (RAG) workflows.
+The platform automatically collects technical content from trusted documentation sources, extracts readable knowledge, stores it in a structured knowledge base, enables intelligent search, and generates AI-powered learning courses using a custom knowledge repository.
 
 ---
 
@@ -35,6 +35,15 @@ The platform automatically collects technical content from documentation website
 - Category-Based Organization
 - Knowledge Base Querying
 
+### AI-Powered Learning
+
+- Gemini AI Integration
+- AI Course Generation
+- Knowledge Base Driven Course Creation
+- Persistent Course Storage
+- Course Listing API
+- Course Details API
+
 ### Performance & Security
 
 - Rate Limiting
@@ -46,166 +55,103 @@ The platform automatically collects technical content from documentation website
 
 ## Architecture
 
-```text
-Seed URLs / User URL
-            ↓
-     URL Validation
-            ↓
-    SSRF Protection
-            ↓
-    DNS Resolution Check
-            ↓
- Axios Fetch / Puppeteer
-            ↓
-      HTML Decoding
-            ↓
-  JSDOM + Readability
-            ↓
-   Content Extraction
-            ↓
-      PostgreSQL
-            ↓
-      Knowledge Base
-            ↓
-       Search API
-            ↓
- Future AI / RAG Layer
-```
-
----
-
-## Tech Stack
-
-### Backend
-
-- Node.js
-- Express.js
-
-### Database
-
-- PostgreSQL
-
-### Content Extraction
-
-- Axios
-- Puppeteer
-- JSDOM
-- Mozilla Readability
-- Iconv Lite
-
-### Security
-
-- Express Rate Limit
-- SSRF Protection
-- DNS Resolution Validation
-
-### Caching
-
-- Node Cache
+Content Source
+↓
+Content Extraction Pipeline
+↓
+PostgreSQL Knowledge Base
+↓
+Search & Retrieval Layer
+↓
+Gemini AI Integration
+↓
+Course Generation Engine
+↓
+Course Storage
+↓
+Course Retrieval APIs
 
 ---
 
 ## API Endpoints
 
-### Extract Content
+### Content Extraction
 
-```http
 GET /api/gethtml?url=https://example.com
-```
-
-### Render JavaScript Websites
-
-```http
-GET /api/gethtml?url=https://example.com&render=true
-```
 
 ### Get All Articles
 
-```http
 GET /api/articles
-```
 
 ### Get Single Article
 
-```http
 GET /api/articles/:id
-```
 
 ### Search Knowledge Base
 
-```http
 GET /api/search?q=node
-```
 
----
+### Generate Course
 
-## Example Search Response
+POST /api/generate-course
 
-```json
+Request:
+
 {
-  "success": true,
-  "count": 3,
-  "articles": [
-    {
-      "id": 26,
-      "title": "Introduction to Node.js",
-      "category": "Backend"
-    }
-  ]
+"category": "Backend"
 }
-```
 
----
+### Get All Courses
 
-## Knowledge Categories
+GET /api/courses
 
-- AI
-- Backend
-- JavaScript
-- Python
-- Database
-- SQL
-- Java
-- C++
-- DSA
-- Cloud
-- Git
-- System Design
-- Operating System
-- Computer Networks
-- DBMS
+### Get Single Course
+
+GET /api/courses/:id
 
 ---
 
 ## Current Workflow
 
-```text
-Content Source
-      ↓
-Extraction
-      ↓
-Knowledge Base
-      ↓
-Search API
-      ↓
-Future AI Layer
-      ↓
+Technical Documentation
+↓
+Knowledge Extraction
+↓
+PostgreSQL Knowledge Base
+↓
+Search Layer
+↓
+Gemini AI
+↓
 Course Generation
-      ↓
-Quiz Generation
-```
+↓
+Course Storage
+↓
+Course Retrieval
+
+---
+
+## Database Tables
+
+### extracted_content
+
+Stores extracted articles and documentation.
+
+### courses
+
+Stores AI-generated courses.
 
 ---
 
 ## Future Improvements
 
-- AI Question Answering Endpoint
-- Course Generation
 - Quiz Generation
+- AI Tutor Endpoint
 - Embedding Generation
 - pgvector Integration
 - Retrieval-Augmented Generation (RAG)
 - Semantic Search
+- Personalized Learning Paths
 - Redis Caching
 - Docker Support
 - Automated Testing
@@ -214,11 +160,47 @@ Quiz Generation
 
 ## Resume Highlights
 
-- Built a secure content extraction pipeline with SSRF protection and rate limiting.
-- Designed a structured knowledge base using PostgreSQL.
-- Implemented automated content seeding and categorization.
-- Developed a search and retrieval system for future AI-powered learning workflows.
-- Architected the platform for future RAG and semantic search integration.
+- Built a scalable knowledge retrieval platform using Node.js, Express.js, and PostgreSQL.
+- Developed a secure content extraction pipeline with SSRF protection, DNS validation, and rate limiting.
+- Implemented automated knowledge ingestion from technical documentation sources.
+- Integrated Gemini AI for dynamic course generation using a custom knowledge base.
+- Designed APIs for AI-generated course creation, storage, retrieval, and search.
+- Architected the system for future RAG, semantic search, and AI tutoring capabilities.
+
+---
+
+## Tech Stack
+
+Backend:
+
+- Node.js
+- Express.js
+
+Database:
+
+- PostgreSQL
+
+AI:
+
+- Gemini AI
+
+Content Extraction:
+
+- Axios
+- Puppeteer
+- JSDOM
+- Mozilla Readability
+- Iconv Lite
+
+Caching:
+
+- Node Cache
+
+Security:
+
+- Express Rate Limit
+- SSRF Protection
+- DNS Validation
 
 ---
 
@@ -226,4 +208,4 @@ Quiz Generation
 
 Hasan Raza
 
-KnowledgeForge demonstrates backend engineering, web scraping, content processing, knowledge retrieval, search systems, and AI-ready architecture for educational applications.
+KnowledgeForge demonstrates backend engineering, knowledge retrieval systems, AI integration, content extraction, search architecture, and AI-powered educational content generation.
