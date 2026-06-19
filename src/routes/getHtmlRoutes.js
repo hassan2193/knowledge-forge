@@ -15,11 +15,13 @@ const {
   getAllCourses,
   getSingleCourse,
 } = require("../controllers/courseController");
+const { generateLesson } = require("../controllers/lessonController");
 
 router.get("/gethtml", rateLimiter, getHtml);
 router.get("/articles", getArticles);
 router.get("/articles/:id", getArticle);
 router.get("/search", search);
+router.post("/generate-lesson", generateLesson);
 router.get("/courses", getAllCourses);
 router.get("/courses/:id", getSingleCourse);
 router.post("/generate-course", generateCourse);
