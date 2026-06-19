@@ -1,18 +1,21 @@
 const pool = require("../config/db");
 
-const getArticlesByCategory = async (category) => {
+const getArticlesByCategory = async (
+  category,
+  { articleLimit = 3, contentCharLimit = 1800 } = {},
+) => {
   const result = await pool.query(
     `
     SELECT
       title,
-      LEFT(content, 1800) AS content,
+      LEFT(content, $2::int) AS content,
       source
     FROM extracted_content
     WHERE category = $1
     ORDER BY id DESC
-    LIMIT 3
+    LIMIT $3::int
     `,
-    [category],
+    [category, contentCharLimit, articleLimit],
   );
 
   return result.rows;

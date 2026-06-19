@@ -1,8 +1,8 @@
-# KnowledgeForge – AI-Powered Knowledge Retrieval & Course Generation Platform
+# KnowledgeForge – AI-Powered Knowledge Retrieval, Course & Lesson Generation Platform
 
-KnowledgeForge is a scalable knowledge retrieval and AI-powered course generation platform built with Node.js, Express.js, PostgreSQL, Gemini AI, Axios, Puppeteer, JSDOM, and Mozilla Readability.
+KnowledgeForge is a scalable AI-powered learning platform built with Node.js, Express.js, PostgreSQL, Gemini AI, Axios, Puppeteer, JSDOM, and Mozilla Readability.
 
-The platform automatically collects technical content from trusted documentation sources, extracts readable knowledge, stores it in a structured knowledge base, enables intelligent search, and generates AI-powered learning courses using a custom knowledge repository.
+The platform automatically collects technical content from trusted documentation sources, extracts structured knowledge, stores it in a PostgreSQL knowledge base, enables intelligent search, and generates AI-powered courses and lessons using a custom knowledge repository.
 
 ---
 
@@ -25,51 +25,81 @@ The platform automatically collects technical content from trusted documentation
 - Automatic Source Detection
 - Article Categorization
 - Content Type Classification
-- Duplicate URL Handling
+- Duplicate URL Prevention
 - Content Metadata Storage
+- Knowledge Repository Management
 
 ### Search & Retrieval
 
 - Search API
-- Title-Based Content Discovery
-- Category-Based Organization
+- Title-Based Search
 - Knowledge Base Querying
+- Category-Based Content Discovery
+- Optimized Content Retrieval
 
 ### AI-Powered Learning
 
+#### AI Course Generation
+
 - Gemini AI Integration
-- AI Course Generation
 - Knowledge Base Driven Course Creation
+- Structured JSON Course Output
+- Custom Learning Goals
+- Beginner to Advanced Course Generation
 - Persistent Course Storage
-- Course Listing API
-- Course Details API
+- Course Retrieval APIs
 
-### Performance & Security
+#### AI Lesson Generation
 
-- Rate Limiting
+- Detailed Lesson Generation
+- Module-Based Learning Content
+- Section-Wise Explanations
+- Key Concepts & Examples
+- Practice Tasks
+- Interview Questions & Answers
+- Persistent Lesson Storage
+- Lesson Reuse from Database
+
+### Performance & Optimization
+
 - In-Memory Caching
-- Centralized Error Handling
+- Course Generation Caching
+- Configurable Content Limits
+- Reduced Prompt Size Optimization
+- Faster AI Response Times
+- Duplicate Lesson Prevention
+
+### Security
+
+- SSRF Protection
+- DNS Validation
+- Rate Limiting
 - Environment Variable Configuration
+- Centralized Error Handling
 
 ---
 
-## Architecture
+## System Architecture
 
-Content Source
+Technical Documentation
 ↓
 Content Extraction Pipeline
+↓
+Knowledge Processing
 ↓
 PostgreSQL Knowledge Base
 ↓
 Search & Retrieval Layer
 ↓
-Gemini AI Integration
+Gemini AI Layer
 ↓
 Course Generation Engine
 ↓
-Course Storage
+Lesson Generation Engine
 ↓
-Course Retrieval APIs
+Persistent Storage
+↓
+Learning APIs
 
 ---
 
@@ -77,47 +107,99 @@ Course Retrieval APIs
 
 ### Content Extraction
 
+```http
 GET /api/gethtml?url=https://example.com
+```
 
 ### Get All Articles
 
+```http
 GET /api/articles
+```
 
 ### Get Single Article
 
+```http
 GET /api/articles/:id
+```
 
 ### Search Knowledge Base
 
+```http
 GET /api/search?q=node
+```
 
-### Generate Course
+### Generate AI Course
 
+```http
 POST /api/generate-course
+```
 
 Request:
 
+```json
 {
-"category": "Backend"
+  "category": "Backend",
+  "level": "Beginner",
+  "duration": "4 Weeks",
+  "goal": "Interview Preparation"
 }
+```
 
 ### Get All Courses
 
+```http
 GET /api/courses
+```
 
-### Get Single Course
+### Get Course By ID
 
+```http
 GET /api/courses/:id
+```
+
+### Generate AI Lesson
+
+```http
+POST /api/generate-lesson
+```
+
+Request:
+
+```json
+{
+  "category": "Backend",
+  "moduleTitle": "Express Middleware",
+  "level": "Beginner",
+  "goal": "Interview Preparation"
+}
+```
+
+---
+
+## Database Schema
+
+### extracted_content
+
+Stores extracted technical articles and documentation.
+
+### courses
+
+Stores AI-generated courses.
+
+### lessons
+
+Stores AI-generated lessons.
 
 ---
 
 ## Current Workflow
 
-Technical Documentation
+Documentation Sources
 ↓
-Knowledge Extraction
+Content Extraction
 ↓
-PostgreSQL Knowledge Base
+Knowledge Base
 ↓
 Search Layer
 ↓
@@ -125,66 +207,72 @@ Gemini AI
 ↓
 Course Generation
 ↓
-Course Storage
+Lesson Generation
 ↓
-Course Retrieval
+Persistent Storage
+↓
+Learning APIs
 
 ---
 
-## Database Tables
+## Performance Improvements
 
-### extracted_content
-
-Stores extracted articles and documentation.
-
-### courses
-
-Stores AI-generated courses.
+- Optimized Prompt Construction
+- Configurable Article Limits
+- Configurable Content Character Limits
+- AI Response Caching
+- Database-Based Lesson Reuse
+- Reduced Token Consumption
+- Faster Course Generation
 
 ---
 
 ## Future Improvements
 
-- Quiz Generation
+- Quiz Generation API
 - AI Tutor Endpoint
 - Embedding Generation
 - pgvector Integration
 - Retrieval-Augmented Generation (RAG)
 - Semantic Search
 - Personalized Learning Paths
+- Course Progress Tracking
 - Redis Caching
 - Docker Support
 - Automated Testing
+- Frontend Learning Dashboard
 
 ---
 
 ## Resume Highlights
 
-- Built a scalable knowledge retrieval platform using Node.js, Express.js, and PostgreSQL.
+- Built a scalable AI-powered learning platform using Node.js, Express.js, PostgreSQL, and Gemini AI.
 - Developed a secure content extraction pipeline with SSRF protection, DNS validation, and rate limiting.
-- Implemented automated knowledge ingestion from technical documentation sources.
-- Integrated Gemini AI for dynamic course generation using a custom knowledge base.
-- Designed APIs for AI-generated course creation, storage, retrieval, and search.
-- Architected the system for future RAG, semantic search, and AI tutoring capabilities.
+- Designed a structured knowledge retrieval system for technical documentation.
+- Implemented AI-powered course generation using a custom knowledge repository.
+- Developed AI-generated lesson creation with interview preparation and practice tasks.
+- Optimized AI response times through caching and prompt engineering techniques.
+- Designed persistent storage and retrieval APIs for AI-generated educational content.
+- Architected the platform for future RAG, semantic search, embeddings, and AI tutoring capabilities.
 
 ---
 
 ## Tech Stack
 
-Backend:
+### Backend
 
 - Node.js
 - Express.js
 
-Database:
+### Database
 
 - PostgreSQL
 
-AI:
+### AI
 
 - Gemini AI
 
-Content Extraction:
+### Content Extraction
 
 - Axios
 - Puppeteer
@@ -192,11 +280,11 @@ Content Extraction:
 - Mozilla Readability
 - Iconv Lite
 
-Caching:
+### Caching
 
 - Node Cache
 
-Security:
+### Security
 
 - Express Rate Limit
 - SSRF Protection
@@ -208,4 +296,4 @@ Security:
 
 Hasan Raza
 
-KnowledgeForge demonstrates backend engineering, knowledge retrieval systems, AI integration, content extraction, search architecture, and AI-powered educational content generation.
+KnowledgeForge demonstrates backend engineering, knowledge retrieval systems, AI integration, content extraction, search architecture, course generation, lesson generation, caching strategies, and AI-powered educational content delivery.
