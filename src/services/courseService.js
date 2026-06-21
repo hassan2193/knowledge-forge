@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 
+// Service functions for course and lesson management
 const getArticlesByCategory = async (
   category,
   { articleLimit = 3, contentCharLimit = 1800 } = {},
@@ -68,6 +69,7 @@ const getCourseById = async (id) => {
   return result.rows[0];
 };
 
+// Generates a unique key for lessons based on category, module title, level, and goal
 const createLessonKey = ({ category, moduleTitle, level, goal }) => {
   return [category, moduleTitle, level, goal]
     .map((value) =>
@@ -151,6 +153,84 @@ const saveLesson = async ({
   return result.rows[0];
 };
 
+// Generates a unique key for lessons based on category, module title, level, and goal
+
+const createQuizKey = ({ category, lessonTitle, level, goal }) => {
+  return [category, lessonTitle, level, goal]
+    .map((value) =>
+      String(value || "")
+        .trim()
+        .toLowerCase(),
+    )
+    .join(":");
+};
+
+const getQuizByKey = async ({ category, lessonTitle, level, goal }) => {
+  const quizKey = createQuizKey({
+    category,
+    lessonTitle,
+    level,
+    goal,
+  });
+
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM quizzes
+    WHERE quiz_key = $1
+    `,
+    [quizKey],
+  );
+
+  return result.rows[0];
+};
+
+const saveQuiz = async ({
+  category,
+  lessonTitle,
+  level,
+  goal,
+  quizContent,
+}) => {
+  const quizKey = createQuizKey({
+    category,
+    lessonTitle,
+    level,
+    goal,
+  });
+
+  const result = await pool.query(
+    `
+    INSERT INTO quizzes
+    (
+      quiz_key,
+      category,
+      lesson_title,
+      level,
+      goal,
+      quiz_content
+    )
+    VALUES
+    (
+      $1,
+      $2,
+      $3,
+      $4,
+      $5,
+      $6
+    )
+    ON CONFLICT (quiz_key)
+    DO UPDATE SET
+      quiz_content = EXCLUDED.quiz_content,
+      updated_at = CURRENT_TIMESTAMP
+    RETURNING *
+    `,
+    [quizKey, category, lessonTitle, level, goal, JSON.stringify(quizContent)],
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   getArticlesByCategory,
   saveCourse,
@@ -158,4 +238,6 @@ module.exports = {
   getCourseById,
   saveLesson,
   getLessonByKey,
+  saveQuiz,
+  getQuizByKey,
 };
