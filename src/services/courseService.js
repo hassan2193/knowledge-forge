@@ -100,6 +100,19 @@ const getLessonByKey = async ({ category, moduleTitle, level, goal }) => {
   return result.rows[0];
 };
 
+const getLessonById = async (id) => {
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM lessons
+    WHERE id = $1
+    `,
+    [id],
+  );
+
+  return result.rows[0];
+};
+
 const saveLesson = async ({
   category,
   moduleTitle,
@@ -153,7 +166,7 @@ const saveLesson = async ({
   return result.rows[0];
 };
 
-// Generates a unique key for lessons based on category, module title, level, and goal
+// Quiz helpers
 
 const createQuizKey = ({ category, lessonTitle, level, goal }) => {
   return [category, lessonTitle, level, goal]
@@ -180,6 +193,19 @@ const getQuizByKey = async ({ category, lessonTitle, level, goal }) => {
     WHERE quiz_key = $1
     `,
     [quizKey],
+  );
+
+  return result.rows[0];
+};
+
+const getQuizById = async (id) => {
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM quizzes
+    WHERE id = $1
+    `,
+    [id],
   );
 
   return result.rows[0];
@@ -240,4 +266,6 @@ module.exports = {
   getLessonByKey,
   saveQuiz,
   getQuizByKey,
+  getQuizById,
+  getLessonById,
 };

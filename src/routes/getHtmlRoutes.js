@@ -15,15 +15,23 @@ const {
   getAllCourses,
   getSingleCourse,
 } = require("../controllers/courseController");
-const { generateLesson } = require("../controllers/lessonController");
-const { generateQuiz } = require("../controllers/quizController");
+const {
+  generateLesson,
+  getSingleLesson,
+} = require("../controllers/lessonController");
+const {
+  generateQuiz,
+  getSingleQuiz,
+} = require("../controllers/quizController");
 
 router.get("/gethtml", rateLimiter, getHtml);
 router.get("/articles", getArticles);
 router.get("/articles/:id", getArticle);
 router.get("/search", search);
 router.post("/generate-lesson", generateLesson);
+router.get("/lessons/:id", getSingleLesson);
 router.post("/generate-quiz", generateQuiz);
+router.get("/quizzes/:id", getSingleQuiz);
 router.get("/courses", getAllCourses);
 router.get("/courses/:id", getSingleCourse);
 router.post("/generate-course", generateCourse);

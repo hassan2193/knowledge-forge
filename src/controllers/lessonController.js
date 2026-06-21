@@ -2,6 +2,7 @@ const {
   getArticlesByCategory,
   saveLesson,
   getLessonByKey,
+  getLessonById,
 } = require("../services/courseService");
 const { generateText } = require("../services/aiService");
 
@@ -188,6 +189,32 @@ Rules:
   }
 };
 
+const getSingleLesson = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const lesson = await getLessonById(id);
+
+    if (!lesson) {
+      return res.status(404).json({
+        success: false,
+        message: "Lesson not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      lesson,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   generateLesson,
+  getSingleLesson,
 };
