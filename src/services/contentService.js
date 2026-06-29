@@ -56,6 +56,16 @@ const saveContent = async ({
   ]);
 };
 
+const getAllUrls = async () => {
+  const result = await pool.query(`
+    SELECT url
+    FROM extracted_content
+  `);
+
+  return result.rows.map((row) => row.url);
+};
+
 module.exports = {
   saveContent,
+  getAllUrls,
 };

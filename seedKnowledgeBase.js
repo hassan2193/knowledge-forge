@@ -4,12 +4,17 @@ const seedUrls = require("./src/data/seedUrls");
 
 const { fetchHtml } = require("./src/services/fetchService");
 const { extractContent } = require("./src/services/extractionService");
-const { saveContent } = require("./src/services/contentService");
+const { saveContent, getAllUrls } = require("./src/services/contentService");
 const { getSource } = require("./src/utils/getSource");
 
 (async () => {
   try {
+    const existingUrls = new Set(await getAllUrls());
     for (const item of seedUrls) {
+      if (existingUrls.has(item.url)) {
+        console.log(`Skipped: ${item.url}`);
+        continue;
+      }
       try {
         console.log(`Processing: ${item.url}`);
 

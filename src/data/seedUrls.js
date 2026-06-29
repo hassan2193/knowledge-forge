@@ -1,17 +1,17 @@
+const backendUrls = require("./backendUrls");
+const javascriptUrls = require("./javascriptUrls");
+const databaseUrls = require("./databaseUrls");
+const gitUrls = require("./gitUrls");
+const networkUrls = require("./networkUrls");
+const osUrls = require("./osUrls");
+const machineLearningUrls = require("./machinelearningUrls");
+
 module.exports = [
-  {
-    url: "https://jwt.io/introduction",
-    category: "Backend",
-    contentType: "article",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication",
-    category: "Backend",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/Security",
-    category: "Backend",
-    contentType: "documentation",
-  },
+  ...backendUrls,
+  ...javascriptUrls,
+  ...databaseUrls,
+  ...gitUrls,
+  ...networkUrls,
+  ...osUrls,
+  ...machineLearningUrls,
 ];
