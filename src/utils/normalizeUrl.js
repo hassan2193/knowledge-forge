@@ -1,7 +1,6 @@
 const normalizeUrl = (url) => {
   let normalizedUrl = url.trim();
 
-  // Add protocol if missing
   if (
     !normalizedUrl.startsWith("http://") &&
     !normalizedUrl.startsWith("https://")
@@ -11,8 +10,14 @@ const normalizeUrl = (url) => {
 
   const parsedUrl = new URL(normalizedUrl);
 
-  // remove trailing slash from pathname
+  // Remove trailing slash
   parsedUrl.pathname = parsedUrl.pathname.replace(/\/$/, "");
+
+  // Remove query parameters
+  parsedUrl.search = "";
+
+  // Remove hash fragments
+  parsedUrl.hash = "";
 
   return parsedUrl.toString();
 };

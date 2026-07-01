@@ -1,14 +1,12 @@
 const handleError = (error) => {
-  if (error.code === "ENOTFOUND") {
-    return "Website not reachable";
+  console.error(error);
+
+  if (error.response) {
+    return error.response.data?.message || error.message;
   }
 
-  if (error.code === "ECONNREFUSED") {
-    return "Connection refused";
-  }
-
-  if (error.code === "ECONNABORTED") {
-    return "Request timeout";
+  if (error.code) {
+    return error.code;
   }
 
   return error.message || "Internal Server Error";
