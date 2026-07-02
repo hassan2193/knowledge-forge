@@ -1,6 +1,6 @@
-const { crawlWebsite } = require("../services/crawlerService");
+const { importDocs } = require("../services/SourceImportService");
 
-const crawl = async (req, res) => {
+const importDocumentation = async (req, res) => {
   try {
     const { source } = req.body;
 
@@ -11,12 +11,11 @@ const crawl = async (req, res) => {
       });
     }
 
-    const urls = await crawlWebsite(source);
+    const result = await importDocs(source);
 
     return res.json({
       success: true,
-      totalUrls: urls.length,
-      urls,
+      ...result,
     });
   } catch (error) {
     return res.status(500).json({
@@ -27,5 +26,5 @@ const crawl = async (req, res) => {
 };
 
 module.exports = {
-  crawl,
+  importDocumentation,
 };
