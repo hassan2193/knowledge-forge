@@ -1,13 +1,12 @@
-const { crawlWebsite } = require("./crawlerService");
 const { fetchHtml } = require("./fetchService");
 const { decodeHtml } = require("./decodeService");
 const { extractContent } = require("./extractionService");
 const { saveContent, getAllUrls } = require("./contentService");
+
+const { normalizeUrl } = require("../utils/normalizeUrl");
 const { getSource } = require("../utils/getSource");
 
-const importDocs = async (source) => {
-  const urls = await crawlWebsite(source);
-
+const importResources = async (urls) => {
   const existingUrls = new Set(await getAllUrls());
 
   let saved = 0;
@@ -15,24 +14,24 @@ const importDocs = async (source) => {
   let failed = 0;
 
   for (let i = 0; i < urls.length; i++) {
-    const url = urls[i];
+    const normalizedUrl = normalizeUrl(urls[i]);
 
-    if (existingUrls.has(url)) {
+    if (existingUrls.has(normalizedUrl)) {
       skipped++;
 
-      console.log(`[${i + 1}/${urls.length}] Skipped: ${url}`);
+      console.log(`[${i + 1}/${urls.length}] Skipped: ${normalizedUrl}`);
 
       continue;
     }
 
     try {
-      console.log(`[${i + 1}/${urls.length}] Processing: ${url}`);
+      console.log(`[${i + 1}/${urls.length}] Processing: ${normalizedUrl}`);
 
-      const response = await fetchHtml(url);
+      const response = await fetchHtml(normalizedUrl);
 
       const html = decodeHtml(response.data);
 
-      const article = extractContent(html, url);
+      const article = extractContent(html, normalizedUrl);
 
       if (!article.content) {
         failed++;
@@ -43,28 +42,20 @@ const importDocs = async (source) => {
       }
 
       await saveContent({
-        url,
-        source: getSource(url),
-        title: article.title,
+        url: normalizedUrl,
+        source: getSource(normalizedUrl),
+        title: article.title || normalizedUrl,
         content: article.content,
         contentLength: article.content.length,
         render: false,
       });
 
-      existingUrls.add(url);
+      existingUrls.add(normalizedUrl);
 
       saved++;
 
       console.log(`[${i + 1}/${urls.length}] Saved`);
     } catch (error) {
-      if (error.response?.status === 404) {
-        skipped++;
-
-        console.log(`[${i + 1}/${urls.length}] Skipped (404): ${url}`);
-
-        continue;
-      }
-
       failed++;
 
       console.log(`[${i + 1}/${urls.length}] Failed: ${error.message}`);
@@ -80,5 +71,5 @@ const importDocs = async (source) => {
 };
 
 module.exports = {
-  importDocs,
+  importResources,
 };
