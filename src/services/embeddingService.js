@@ -1,30 +1,21 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenAI } = require("@google/genai");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-embedding-001",
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
-const generateEmbedding = async (text) => {
-  if (!text) {
-    throw new Error("Text is required");
-  }
-
-  const result = await model.embedContent({
-    content: {
-      parts: [
-        {
-          text,
-        },
-      ],
+const generateEmbeddings = async (texts) => {
+  const response = await ai.models.embedContent({
+    model: "gemini-embedding-001",
+    contents: texts,
+    config: {
+      outputDimensionality: 768,
     },
-    outputDimensionality: 768,
   });
 
-  return result.embedding.values;
+  return response.embeddings.map((e) => e.values);
 };
 
 module.exports = {
-  generateEmbedding,
+  generateEmbeddings,
 };

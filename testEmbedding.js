@@ -1,12 +1,18 @@
 require("dotenv").config();
 
-const { generateEmbedding } = require("./src/services/embeddingService");
+const { generateEmbeddings } = require("./src/services/embeddingService");
 
 (async () => {
   try {
-    const embedding = await generateEmbedding(
-      "Node.js Event Loop executes asynchronous callbacks.",
-    );
+    const embeddings = await generateEmbeddings([
+      "Hello",
+      "World",
+      "Node",
+      "Express",
+      "PostgreSQL",
+    ]);
+
+    const embedding = embeddings[0];
 
     console.log(`Dimensions: ${embedding.length}`);
     console.log(embedding.slice(0, 10));

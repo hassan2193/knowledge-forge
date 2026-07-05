@@ -103,9 +103,35 @@ const saveChunks = async (contentId, chunks) => {
   await pool.query(query, values);
 };
 
+const getChunksWithoutEmbeddings = async () => {
+  const result = await pool.query(`
+    SELECT
+      id,
+      content
+    FROM content_chunks
+    WHERE embedding IS NULL
+    ORDER BY id
+  `);
+
+  return result.rows;
+};
+
+const saveEmbedding = async (chunkId, embedding) => {
+  await pool.query(
+    `
+    UPDATE content_chunks
+    SET embedding = $1
+    WHERE id = $2
+    `,
+    [`[${embedding.join(",")}]`, chunkId],
+  );
+};
+
 module.exports = {
   saveContent,
   getAllUrls,
   getAllContent,
+  getChunksWithoutEmbeddings,
   saveChunks,
+  saveEmbedding,
 };
