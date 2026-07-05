@@ -1,163 +1,301 @@
-# KnowledgeForge – AI-Powered Knowledge Retrieval, Course, Lesson & Quiz Generation Platform
+# KnowledgeForge – AI-Powered Retrieval-Augmented Generation (RAG) Platform
 
-KnowledgeForge is a scalable AI-powered learning content generation platform built with Node.js, Express.js, PostgreSQL, Gemini AI, Axios, Puppeteer, JSDOM, and Mozilla Readability.
+KnowledgeForge is an AI-powered Retrieval-Augmented Generation (RAG) platform that automatically extracts technical documentation, builds a semantic vector knowledge base using PostgreSQL and pgvector, performs semantic search, and generates context-aware AI responses, courses, lessons, and quizzes using Gemini AI.
 
-The platform automatically extracts technical content from trusted documentation sources, transforms it into a structured knowledge repository, and generates AI-powered courses, lessons, and quizzes. It combines knowledge retrieval, content processing, intelligent search, caching, and AI-driven educational content generation into a unified learning system.
+The platform automatically extracts technical documentation from trusted sources, builds a semantic vector knowledge base using Gemini Embeddings and pgvector, performs intelligent semantic search, and generates AI-powered answers, courses, lessons, and quizzes using Retrieval-Augmented Generation (RAG).
 
 ---
 
-## Features
+# Features
 
-### Content Acquisition
+## Documentation Ingestion
 
-- URL Validation & Normalization
+- URL Validation
+- URL Normalization
 - SSRF Protection
-- DNS-Based SSRF Detection
-- HTML Fetching with Axios
-- Dynamic Website Rendering with Puppeteer
-- HTML Decoding with Iconv Lite
-- Content Extraction using JSDOM & Mozilla Readability
+- DNS Rebinding Protection
+- HTML Fetching (Axios)
+- Dynamic Website Rendering (Puppeteer)
+- HTML Decoding (Iconv Lite)
+- Content Extraction (Mozilla Readability + JSDOM)
+- Automatic Source Detection
+- Metadata Extraction
 
-### Knowledge Base Management
+---
+
+## Knowledge Base
 
 - PostgreSQL Knowledge Repository
-- Automatic Source Detection
-- Content Categorization
 - Duplicate URL Prevention
-- Metadata Storage
-- Structured Knowledge Persistence
+- Structured Knowledge Storage
+- Content Categorization
+- Metadata Persistence
 
-### Search & Retrieval
+---
 
-- Search API
-- Title-Based Search
-- Category-Based Content Discovery
-- Knowledge Base Querying
-- Optimized Content Retrieval
+## Chunking Pipeline
 
-### AI-Powered Learning
+- Automatic Content Chunking
+- Overlapping Chunk Strategy
+- Configurable Chunk Size
+- Configurable Chunk Overlap
+- Chunk Persistence
 
-#### AI Course Generation
+---
 
-- Gemini AI Integration
-- Structured JSON Course Generation
-- Custom Learning Goals
-- Configurable Course Duration
-- Difficulty-Based Learning Paths
-- Persistent Course Storage
-- Course Retrieval APIs
+## Vector Search (RAG)
 
-#### AI Lesson Generation
+- Gemini Embedding API
+- Batch Embedding Generation
+- 768-Dimensional Embeddings
+- pgvector Integration
+- Vector Indexing
+- Query Embedding Generation
+- Cosine Similarity Search
+- Semantic Search
+- Retrieval-Augmented Generation (RAG)
+- Context-Aware Prompt Construction
 
-- Module-Based Lesson Creation
-- Structured JSON Lesson Output
-- Section-Wise Explanations
-- Key Concepts & Examples
+---
+
+## AI Learning Engine
+
+### AI Chat
+
+- Retrieval-Augmented Responses
+- Context-Aware Answer Generation
+- Semantic Knowledge Retrieval
+- Hallucination Reduction
+
+### AI Course Generation
+
+- Structured JSON Output
+- Learning Goal Based Courses
+- Difficulty Levels
+- Course Duration Control
+- Persistent Storage
+
+### AI Lesson Generation
+
+- Module-Based Lessons
+- Section-wise Explanations
+- Examples
+- Interview Questions
 - Practice Tasks
-- Interview Questions & Answers
-- Persistent Lesson Storage
-- Database-Based Lesson Reuse
+- Persistent Storage
 
-#### AI Quiz Generation
+### AI Quiz Generation
 
-- AI-Generated MCQ Assessments
-- Knowledge Base Driven Quiz Creation
-- Multiple Choice Questions
-- Correct Answers & Explanations
-- Persistent Quiz Storage
-- Database-Based Quiz Reuse
-- Quiz Retrieval APIs
+- AI Generated MCQs
+- Correct Answers
+- Detailed Explanations
+- Persistent Storage
 
-### Performance & Optimization
+---
 
-- In-Memory Caching
-- Database Reuse Strategy
-- Configurable Content Limits
-- Optimized Prompt Construction
-- Reduced Token Consumption
-- Faster AI Response Times
-- Duplicate Lesson Prevention
-- Duplicate Quiz Prevention
+## Search & Retrieval
 
-### Security
+- Keyword Search
+- Semantic Search
+- Article Search
+- Knowledge Base Querying
+- Vector Similarity Search
+
+---
+
+## Performance Optimizations
+
+- Node Cache
+- Prompt Optimization
+- Configurable Prompt Size
+- Reduced Token Usage
+- Database Reuse
+- Batch Embedding Generation
+- Optimized Chunk Retrieval
+
+---
+
+## Security
 
 - SSRF Protection
 - DNS Validation
 - Express Rate Limiting
-- Environment Variable Management
+- Environment Variables
 - Centralized Error Handling
 
 ---
 
-## System Architecture
+# Project Architecture
 
-Documentation Sources
-↓
-Content Extraction Pipeline
-↓
-Knowledge Processing
-↓
-PostgreSQL Knowledge Base
-↓
-Search & Retrieval Layer
-↓
-Gemini AI Layer
-↓
-Course Generation Engine
-↓
-Lesson Generation Engine
-↓
-Quiz Generation Engine
-↓
-Persistent Storage
-↓
-Learning APIs
+```
+                 Documentation Sources
+                          │
+                          ▼
+                HTML Extraction Pipeline
+                          │
+                          ▼
+                  Content Processing
+                          │
+                          ▼
+                 Chunk Generation Engine
+                          │
+                          ▼
+             Gemini Embedding Generation
+                          │
+                          ▼
+          PostgreSQL + pgvector Knowledge Base
+                          │
+                          ▼
+               Semantic Vector Search (RAG)
+                          │
+                          ▼
+               Context-Aware Prompt Builder
+                          │
+                          ▼
+                    Gemini AI Generation
+                          │
+      ┌───────────────────┼───────────────────┐
+      ▼                   ▼                   ▼
+ AI Chat            Course Generator    Lesson Generator
+                                              │
+                                              ▼
+                                       Quiz Generator
+                                              │
+                                              ▼
+                                      Persistent Storage
+```
 
 ---
 
-## API Endpoints
+# Folder Structure
 
-### Content Extraction
+```
+KnowledgeForge
+│
+├── src
+│   ├── config
+│   │   └── db.js
+│   │
+│   ├── controllers
+│   │   ├── articleController.js
+│   │   ├── chatController.js
+│   │   ├── courseController.js
+│   │   ├── getHtmlController.js
+│   │   ├── importController.js
+│   │   ├── lessonController.js
+│   │   └── quizController.js
+│   │
+│   ├── data
+│   │
+│   ├── middleware
+│   │
+│   ├── prompts
+│   │   └── ragPrompt.js
+│   │
+│   ├── routes
+│   │   ├── chatRoutes.js
+│   │   ├── getHtmlRoutes.js
+│   │   └── importRoutes.js
+│   │
+│   ├── services
+│   │   ├── aiService.js
+│   │   ├── articleService.js
+│   │   ├── cacheService.js
+│   │   ├── chunkService.js
+│   │   ├── contentService.js
+│   │   ├── decodeService.js
+│   │   ├── embeddingService.js
+│   │   ├── extractionService.js
+│   │   ├── fetchService.js
+│   │   ├── ragService.js
+│   │   ├── renderService.js
+│   │   ├── responseService.js
+│   │   ├── searchService.js
+│   │   ├── securityService.js
+│   │   ├── sourceImportService.js
+│   │   ├── validationService.js
+│   │   └── vectorSearchService.js
+│   │
+│   ├── utils
+│   │
+│   └── app.js
+│
+├── server.js
+├── seedKnowledgeBase.js
+├── seedChunks.js
+├── seedEmbeddings.js
+├── testGemini.js
+├── testEmbedding.js
+└── testSearch.js
+```
 
-GET /api/gethtml?url=https://example.com
+---
 
-### Articles
+# API Endpoints
 
+## Content Extraction
+
+```
+GET /api/gethtml
+```
+
+---
+
+## Articles
+
+```
 GET /api/articles
-
 GET /api/articles/:id
-
-### Search
-
-GET /api/search?q=node
-
-### AI Course Generation
-
-POST /api/generate-course
-
-GET /api/courses
-
-GET /api/courses/:id
-
-### AI Lesson Generation
-
-POST /api/generate-lesson
-
-GET /api/lessons/:id
-
-### AI Quiz Generation
-
-POST /api/generate-quiz
-
-GET /api/quizzes/:id
+GET /api/search
+```
 
 ---
 
-## Database Schema
+## AI Chat (RAG)
+
+```
+POST /api/chat
+```
+
+---
+
+## Courses
+
+```
+POST /api/generate-course
+GET /api/courses
+GET /api/courses/:id
+```
+
+---
+
+## Lessons
+
+```
+POST /api/generate-lesson
+GET /api/lessons/:id
+```
+
+---
+
+## Quizzes
+
+```
+POST /api/generate-quiz
+GET /api/quizzes/:id
+```
+
+---
+
+# Database Schema
 
 ### extracted_content
 
-Stores extracted documentation and technical articles.
+Stores extracted documentation and metadata.
+
+### content_chunks
+
+Stores overlapping content chunks with vector embeddings.
 
 ### courses
 
@@ -169,92 +307,28 @@ Stores AI-generated lessons.
 
 ### quizzes
 
-Stores AI-generated quizzes and assessments.
+Stores AI-generated quizzes.
 
 ---
 
-## Current Workflow
+# Tech Stack
 
-Documentation Sources
-↓
-Knowledge Extraction
-↓
-PostgreSQL Knowledge Base
-↓
-Search Layer
-↓
-Gemini AI
-↓
-Course Generation
-↓
-Lesson Generation
-↓
-Quiz Generation
-↓
-Persistent Storage
-↓
-Learning APIs
-
----
-
-## Performance Optimizations
-
-- Prompt Size Optimization
-- Configurable Article Limits
-- Configurable Content Character Limits
-- AI Response Caching
-- Database-Based Lesson Reuse
-- Database-Based Quiz Reuse
-- Reduced Token Usage
-- Faster Content Generation
-
----
-
-## Future Improvements
-
-- Embedding Generation
-- pgvector Integration
-- Retrieval-Augmented Generation (RAG)
-- Semantic Search
-- Personalized Learning Paths
-- Course Progress Tracking
-- Redis Caching
-- Docker Support
-- Automated Testing
-- Frontend Learning Dashboard
-- Interactive Assessments
-
----
-
-## Resume Highlights
-
-- Built a scalable AI-powered learning content generation platform using Node.js, Express.js, PostgreSQL, and Gemini AI.
-- Developed a secure content extraction pipeline with SSRF protection, DNS validation, and rate limiting.
-- Designed a structured knowledge retrieval system for technical documentation.
-- Implemented AI-powered course, lesson, and quiz generation using a custom knowledge repository.
-- Engineered persistent storage and retrieval APIs for AI-generated educational content.
-- Optimized AI performance through caching, database reuse strategies, and prompt engineering techniques.
-- Designed the architecture for future Retrieval-Augmented Generation (RAG), semantic search, embeddings, and vector-based retrieval.
-- Built an end-to-end automated learning content generation workflow from documentation ingestion to assessment creation.
-
----
-
-## Tech Stack
-
-### Backend
+## Backend
 
 - Node.js
 - Express.js
 
-### Database
+## Database
 
 - PostgreSQL
+- pgvector
 
-### AI
+## AI
 
-- Gemini AI
+- Gemini 2.5 Flash
+- Gemini Embedding-001
 
-### Content Extraction
+## Content Extraction
 
 - Axios
 - Puppeteer
@@ -262,11 +336,11 @@ Learning APIs
 - Mozilla Readability
 - Iconv Lite
 
-### Caching
+## Caching
 
 - Node Cache
 
-### Security
+## Security
 
 - Express Rate Limit
 - SSRF Protection
@@ -274,8 +348,74 @@ Learning APIs
 
 ---
 
-## Author
+# Current Workflow
 
-Hasan Raza
+```
+Documentation Sources
+        │
+        ▼
+HTML Extraction
+        │
+        ▼
+Content Cleaning
+        │
+        ▼
+Chunk Generation
+        │
+        ▼
+Embedding Generation
+        │
+        ▼
+Vector Database (pgvector)
+        │
+        ▼
+Semantic Search
+        │
+        ▼
+Prompt Construction
+        │
+        ▼
+Gemini AI
+        │
+ ┌──────┼──────────────┐
+ ▼      ▼              ▼
+Chat  Courses      Lessons
+                      │
+                      ▼
+                    Quizzes
+```
 
-KnowledgeForge demonstrates backend engineering, knowledge retrieval systems, AI integration, educational content generation, caching strategies, prompt engineering, search architecture, and scalable AI-powered learning platform design.
+---
+
+# Resume Highlights
+
+- Built an end-to-end Retrieval-Augmented Generation (RAG) platform using Node.js, PostgreSQL, pgvector, and Gemini AI.
+- Developed a secure documentation ingestion pipeline with SSRF protection, DNS validation, and rate limiting.
+- Implemented semantic search using vector embeddings, cosine similarity search, and pgvector.
+- Designed an automated chunking and embedding pipeline for large-scale documentation indexing.
+- Built AI-powered chat, course, lesson, and quiz generation using a custom semantic knowledge base.
+- Optimized AI performance using caching, prompt engineering, vector retrieval, and database reuse strategies.
+- Engineered a scalable backend architecture for intelligent educational content generation.
+
+---
+
+# Future Improvements
+
+- Hybrid Search (Keyword + Vector)
+- Redis Caching
+- Conversation Memory
+- User Authentication
+- Personalized Learning Paths
+- Course Progress Tracking
+- Streaming AI Responses
+- Docker Support
+- CI/CD Pipeline
+- Frontend Learning Dashboard
+
+---
+
+# Author
+
+**Hasan Raza**
+
+KnowledgeForge demonstrates backend engineering, Retrieval-Augmented Generation (RAG), semantic search, vector databases, prompt engineering, AI integration, scalable REST APIs, educational content generation, and intelligent knowledge retrieval.
