@@ -1,102 +1,68 @@
 module.exports = [
-  // MDN JavaScript
+  {
+    url: "https://javascript.info/function-basics",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/function-expressions",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/arrow-functions-basics",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/destructuring-assignment",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/rest-parameters-spread",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/callbacks",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/event-loop",
+    category: "JavaScript",
+    contentType: "article",
+  },
+  {
+    url: "https://javascript.info/fetch",
+    category: "JavaScript",
+    contentType: "article",
+  },
 
   {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
     category: "JavaScript",
     contentType: "documentation",
   },
   {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
     category: "JavaScript",
     contentType: "documentation",
   },
   {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
     category: "JavaScript",
     contentType: "documentation",
   },
   {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
     category: "JavaScript",
     contentType: "documentation",
   },
   {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions",
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
     category: "JavaScript",
     contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-  {
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
-    category: "JavaScript",
-    contentType: "documentation",
-  },
-
-  // JavaScript.info
-
-  {
-    url: "https://javascript.info/intro",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/variables",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/types",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/object",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/array",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/promise-basics",
-    category: "JavaScript",
-    contentType: "article",
-  },
-  {
-    url: "https://javascript.info/async-await",
-    category: "JavaScript",
-    contentType: "article",
   },
 ];
