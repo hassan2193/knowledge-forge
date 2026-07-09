@@ -1,5 +1,5 @@
 const backendUrls = require("./backendUrls");
 const javascriptUrls = require("./javascriptUrls");
-const databaseUrls = require("./databaseUrls");
+const pythonUrls = require("./pythonUrls");
 
-module.exports = [...backendUrls, ...javascriptUrls, ...databaseUrls];
+module.exports = [...backendUrls, ...javascriptUrls, ...pythonUrls];
