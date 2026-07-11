@@ -1,11 +1,13 @@
 const {
-  getArticlesByCategory,
   saveCourse,
   getCourses,
   getCourseById,
 } = require("../services/courseService");
 const { generateText } = require("../services/aiService");
 const cache = require("../services/cacheService");
+
+const { generateCourseContext } = require("../services/ragService");
+const { buildCoursePrompt } = require("../prompts/coursePrompt");
 
 const generateCourse = async (req, res) => {
   const startedAt = Date.now();
@@ -26,10 +28,6 @@ const generateCourse = async (req, res) => {
       });
     }
 
-    const articleLimit = Number(process.env.COURSE_ARTICLE_LIMIT) || 3;
-    const contentCharLimit =
-      Number(process.env.COURSE_CONTENT_CHAR_LIMIT) || 1800;
-
     const cacheKey = `course:v2:${category}:${level}:${duration}:${goal}`;
 
     if (!refresh && cache.has(cacheKey)) {
@@ -46,80 +44,27 @@ const generateCourse = async (req, res) => {
       });
     }
 
-    const articles = await getArticlesByCategory(category, {
-      articleLimit,
-      contentCharLimit,
-    });
+    const context = await generateCourseContext(
+      category,
+      level,
+      duration,
+      goal,
+    );
 
-    if (articles.length === 0) {
+    if (!context.trim()) {
       return res.status(404).json({
         success: false,
-        message: "No articles found",
+        message: "No relevant knowledge found",
       });
     }
 
-    const titles = articles
-      .map((article, index) => `${index + 1}. ${article.title}`)
-      .join("\n");
-
-    const learningMaterial = articles
-      .map((article, index) => {
-        return `
-Source ${index + 1}
-Title: ${article.title}
-Source: ${article.source}
-Content:
-${article.content}
-`;
-      })
-      .join("\n---\n");
-
-    const prompt = `
-You are an expert curriculum designer.
-
-Use this knowledge base only.
-
-Topics:
-${titles}
-
-Learning material:
-${learningMaterial}
-
-Generate a ${category} course.
-
-Course requirements:
-Level: ${level}
-Duration: ${duration}
-Goal: ${goal}
-
-Return ONLY valid JSON.
-No markdown.
-No code fences.
-No explanation outside JSON.
-
-JSON structure:
-{
-  "title": "string",
-  "level": "string",
-  "duration": "string",
-  "goal": "string",
-  "modules": [
-    {
-      "title": "string",
-      "description": "string",
-      "objectives": ["string", "string"],
-      "estimatedTime": "string"
-    }
-  ]
-}
-
-Rules:
-- Generate exactly 5 modules
-- Each module must include a short description
-- Each module must include exactly 2 objectives
-- Do not include lessons
-- Keep response concise
-`;
+    const prompt = buildCoursePrompt({
+      context,
+      category,
+      level,
+      duration,
+      goal,
+    });
 
     const aiStartedAt = Date.now();
     const courseText = await generateText(prompt);
@@ -164,7 +109,6 @@ Rules:
       content: course,
       course,
       meta: {
-        articleCount: articles.length,
         promptChars: prompt.length,
         aiMs,
         totalMs: Date.now() - startedAt,
