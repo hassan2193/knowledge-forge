@@ -1,10 +1,13 @@
 const {
-  getArticlesByCategory,
   saveLesson,
   getLessonByKey,
   getLessonById,
 } = require("../services/courseService");
+
 const { generateText } = require("../services/aiService");
+
+const { generateLessonContext } = require("../services/ragService");
+const { buildLessonPrompt } = require("../prompts/lessonPrompt");
 
 const cleanJsonResponse = (text) =>
   text
@@ -55,83 +58,29 @@ const generateLesson = async (req, res) => {
       }
     }
 
-    const articles = await getArticlesByCategory(category);
+    const context = await generateLessonContext(
+      category,
+      moduleTitle,
+      moduleDescription,
+      level,
+      goal,
+    );
 
-    if (articles.length === 0) {
+    if (!context.trim()) {
       return res.status(404).json({
         success: false,
-        message: "No articles found",
+        message: "No relevant knowledge found",
       });
     }
 
-    const learningMaterial = articles
-      .map((article, index) => {
-        return `
-Source ${index + 1}
-Title: ${article.title}
-Source: ${article.source}
-Content:
-${article.content}
-`;
-      })
-      .join("\n---\n");
-
-    const prompt = `
-You are an expert technical instructor.
-
-Use this knowledge base only.
-
-Learning material:
-${learningMaterial}
-
-Generate one detailed lesson.
-
-Lesson requirements:
-Category: ${category}
-Module title: ${moduleTitle}
-Module description: ${moduleDescription}
-Level: ${level}
-Goal: ${goal}
-
-Return ONLY valid JSON.
-No markdown.
-No code fences.
-No explanation outside JSON.
-
-JSON structure:
-{
-  "title": "string",
-  "category": "string",
-  "level": "string",
-  "goal": "string",
-  "summary": "string",
-  "sections": [
-    {
-      "title": "string",
-      "explanation": "string",
-      "keyPoints": ["string", "string"],
-      "example": "string"
-    }
-  ],
-  "practiceTask": {
-    "title": "string",
-    "instructions": "string"
-  },
-  "interviewQuestions": [
-    {
-      "question": "string",
-      "answer": "string"
-    }
-  ]
-}
-
-Rules:
-- Generate exactly 3 sections
-- Each section must be concise and practical
-- Include exactly 2 key points per section
-- Include exactly 3 interview questions
-- Keep the full lesson useful but not too long
-`;
+    const prompt = buildLessonPrompt({
+      context,
+      category,
+      moduleTitle,
+      moduleDescription,
+      level,
+      goal,
+    });
 
     const aiStartedAt = Date.now();
     const lessonText = await generateText(prompt);
@@ -175,7 +124,6 @@ Rules:
       lesson,
       savedLessonId: savedLesson.id,
       meta: {
-        articleCount: articles.length,
         promptChars: prompt.length,
         aiMs,
         totalMs: Date.now() - startedAt,
