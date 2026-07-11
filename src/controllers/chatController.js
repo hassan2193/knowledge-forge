@@ -1,11 +1,4 @@
-const { generateText } = require("../services/aiService");
-
-const {
-  generateQueryEmbedding,
-  searchSimilarChunks,
-} = require("../services/searchService");
-
-const { buildRagPrompt } = require("../prompts/ragPrompt");
+const { answerQuestion } = require("../services/ragService");
 
 const chat = async (req, res) => {
   try {
@@ -18,18 +11,12 @@ const chat = async (req, res) => {
       });
     }
 
-    const embedding = await generateQueryEmbedding(question);
-
-    const chunks = await searchSimilarChunks(embedding);
-
-    const prompt = buildRagPrompt(question, chunks);
-
-    const answer = await generateText(prompt);
+    const { answer, sources } = await answerQuestion(question);
 
     return res.json({
       success: true,
       answer,
-      sources: chunks,
+      sources,
     });
   } catch (error) {
     console.error(error);
