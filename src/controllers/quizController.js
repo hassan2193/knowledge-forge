@@ -1,6 +1,7 @@
 const {
   getLessonById,
   getQuizByKey,
+  getQuizById,
   saveQuiz,
 } = require("../services/courseService");
 
@@ -114,6 +115,32 @@ const generateQuiz = async (req, res) => {
   }
 };
 
+const getSingleQuiz = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const quiz = await getQuizById(id);
+
+    if (!quiz) {
+      return res.status(404).json({
+        success: false,
+        message: "Quiz not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      quiz,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   generateQuiz,
+  getSingleQuiz,
 };

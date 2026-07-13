@@ -102,27 +102,6 @@ Goal: ${goal}
   return formatContext(chunks);
 };
 
-//Quiz Retrieval
-
-const generateQuizContext = async (
-  category,
-  lessonTitle,
-  level,
-  goal,
-  limit = 8,
-) => {
-  const query = `
-Category: ${category}
-Lesson: ${lessonTitle}
-Level: ${level}
-Goal: ${goal}
-`;
-
-  const chunks = await retrieveContext(query, limit);
-
-  return formatContext(chunks);
-};
-
 module.exports = {
   retrieveContext,
   formatContext,
@@ -130,5 +109,4 @@ module.exports = {
   answerQuestion,
   generateCourseContext,
   generateLessonContext,
-  generateQuizContext,
 };
