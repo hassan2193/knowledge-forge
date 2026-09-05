@@ -107,6 +107,75 @@ function Landing() {
 
 </section>
 
+{/* RAG Pipeline Section */}
+<section className="px-6 py-24 border-t border-slate-800">
+
+  <div className="max-w-6xl mx-auto">
+
+    <div className="text-center mb-16">
+      <p className="text-sm uppercase tracking-widest text-slate-500">
+        How It Works
+      </p>
+
+      <h2 className="text-4xl font-bold mt-3">
+        From documentation to
+        <span className="text-slate-400"> learning content.</span>
+      </h2>
+
+      <p className="max-w-2xl mx-auto mt-5 text-slate-400">
+        KnowledgeForge combines retrieval and generative AI to
+        transform trusted documentation into context-aware educational content.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-4 gap-4">
+
+      <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50">
+        <span className="text-slate-500 text-sm">01</span>
+        <h3 className="text-lg font-semibold mt-2">
+          Documentation
+        </h3>
+        <p className="text-sm text-slate-400 mt-2">
+          Import trusted technical documentation.
+        </p>
+      </div>
+
+      <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50">
+        <span className="text-slate-500 text-sm">02</span>
+        <h3 className="text-lg font-semibold mt-2">
+          Process & Chunk
+        </h3>
+        <p className="text-sm text-slate-400 mt-2">
+          Extract, clean, and split content into meaningful chunks.
+        </p>
+      </div>
+
+      <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50">
+        <span className="text-slate-500 text-sm">03</span>
+        <h3 className="text-lg font-semibold mt-2">
+          Retrieve
+        </h3>
+        <p className="text-sm text-slate-400 mt-2">
+          Generate embeddings and retrieve relevant knowledge semantically.
+        </p>
+      </div>
+
+      <div className="p-5 rounded-xl border border-slate-800 bg-slate-900/50">
+        <span className="text-slate-500 text-sm">04</span>
+        <h3 className="text-lg font-semibold mt-2">
+          Generate
+        </h3>
+        <p className="text-sm text-slate-400 mt-2">
+          Gemini uses retrieved context to create courses, lessons, and quizzes.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
     </div>
   )
 }
