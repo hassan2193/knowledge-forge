@@ -47,6 +47,66 @@ function Landing() {
 
       </section>
 
+      {/* Features Section */}
+<section className="px-6 py-20 border-t border-slate-800">
+
+  <div className="max-w-6xl mx-auto">
+
+    <div className="text-center mb-14">
+      <p className="text-sm uppercase tracking-widest text-slate-500">
+        Why KnowledgeForge
+      </p>
+
+      <h2 className="text-4xl font-bold mt-3">
+        Everything you need to create
+        <span className="text-slate-400"> better learning content.</span>
+      </h2>
+    </div>
+
+    <div className="grid md:grid-cols-3 gap-6">
+
+      {/* Feature 1 */}
+      <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <h3 className="text-xl font-semibold mb-3">
+          RAG-Powered Generation
+        </h3>
+
+        <p className="text-slate-400 leading-relaxed">
+          Generate courses, lessons, and quizzes using relevant
+          knowledge retrieved from your documentation.
+        </p>
+      </div>
+
+      {/* Feature 2 */}
+      <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <h3 className="text-xl font-semibold mb-3">
+          Documentation to Courses
+        </h3>
+
+        <p className="text-slate-400 leading-relaxed">
+          Transform technical documentation into structured and
+          engaging learning experiences with AI.
+        </p>
+      </div>
+
+      {/* Feature 3 */}
+      <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50">
+        <h3 className="text-xl font-semibold mb-3">
+          AI-Powered Learning
+        </h3>
+
+        <p className="text-slate-400 leading-relaxed">
+          Provide context-aware AI chat, lessons, and quizzes
+          designed around your knowledge base.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
     </div>
   )
 }
