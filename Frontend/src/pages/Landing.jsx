@@ -35,13 +35,13 @@ function Landing() {
 
         <div className="flex justify-center gap-4 mt-10">
 
-          <button className="px-7 py-3 rounded-lg bg-white text-slate-950 font-semibold hover:bg-slate-200 transition">
+          <button className="px-7 py-3 rounded-lg bg-white text-slate-950 font-semibold hover:bg-slate-200 transition cursor-pointer">
             Explore KnowledgeForge
           </button>
 
-          <button className="px-7 py-3 rounded-lg border border-slate-700 hover:bg-slate-900 transition">
-            View Demo
-          </button>
+          <button className="px-7 py-3 rounded-lg border border-slate-700 hover:bg-slate-900 transition cursor-pointer">
+  View Demo
+</button>
 
         </div>
 
