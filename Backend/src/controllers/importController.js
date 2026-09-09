@@ -1,4 +1,4 @@
-const { importDocs } = require("../services/SourceImportService");
+const { importResources } = require("../services/SourceImportService");
 
 const importDocumentation = async (req, res) => {
   try {
@@ -11,13 +11,15 @@ const importDocumentation = async (req, res) => {
       });
     }
 
-    const result = await importDocs(source);
+    const result = await importResources([source]);
 
     return res.json({
       success: true,
       ...result,
     });
   } catch (error) {
+    console.error("IMPORT ERROR:", error);
+
     return res.status(500).json({
       success: false,
       error: error.message,
