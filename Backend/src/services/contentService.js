@@ -75,6 +75,24 @@ const getAllContent = async () => {
   return result.rows;
 };
 
+// Get only documents that have no chunks yet
+const getContentWithoutChunks = async () => {
+  const result = await pool.query(`
+    SELECT
+      ec.id,
+      ec.content
+    FROM extracted_content ec
+    WHERE NOT EXISTS (
+      SELECT 1
+      FROM content_chunks cc
+      WHERE cc.content_id = ec.id
+    )
+    ORDER BY ec.id
+  `);
+
+  return result.rows;
+};
+
 const saveChunks = async (contentId, chunks) => {
   if (!chunks.length) return;
 
@@ -84,7 +102,9 @@ const saveChunks = async (contentId, chunks) => {
   chunks.forEach((chunk, index) => {
     const offset = index * 3;
 
-    placeholders.push(`($${offset + 1}, $${offset + 2}, $${offset + 3})`);
+    placeholders.push(
+      `($${offset + 1}, $${offset + 2}, $${offset + 3})`
+    );
 
     values.push(contentId, index, chunk);
   });
@@ -98,6 +118,8 @@ const saveChunks = async (contentId, chunks) => {
     )
     VALUES
     ${placeholders.join(",")}
+    ON CONFLICT (content_id, chunk_index)
+    DO NOTHING
   `;
 
   await pool.query(query, values);
@@ -131,7 +153,8 @@ module.exports = {
   saveContent,
   getAllUrls,
   getAllContent,
-  getChunksWithoutEmbeddings,
+  getContentWithoutChunks,
   saveChunks,
+  getChunksWithoutEmbeddings,
   saveEmbedding,
 };

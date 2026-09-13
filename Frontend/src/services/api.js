@@ -9,4 +9,12 @@ export const getArticles = async () => {
   return response.data;
 };
 
+export const importDocs = async (source) => {
+  const response = await api.post("/import", {
+    source,
+  });
+
+  return response.data;
+};
+
 export default api;

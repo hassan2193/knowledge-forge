@@ -1,3 +1,8 @@
+const {
+  getChunksWithoutEmbeddings,
+  saveEmbedding,
+} = require("./contentService");
+
 const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({
@@ -16,6 +21,54 @@ const generateEmbeddings = async (texts) => {
   return response.embeddings.map((e) => e.values);
 };
 
+
+
+const sleep = (ms) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+const processAllEmbeddings = async () => {
+  const batchSize = 5;
+
+  const chunks = await getChunksWithoutEmbeddings();
+
+  let processed = 0;
+
+  console.log(`Found ${chunks.length} chunks without embeddings`);
+
+  for (let i = 0; i < chunks.length; i += batchSize) {
+    const batch = chunks.slice(i, i + batchSize);
+
+    const texts = batch.map((chunk) => chunk.content);
+
+    let embeddings = null;
+
+    while (!embeddings) {
+      try {
+        embeddings = await generateEmbeddings(texts);
+      } catch (error) {
+        if (error.status === 429) {
+          console.log("Rate limit hit. Waiting 60 seconds...");
+          await sleep(60000);
+          continue;
+        }
+
+        throw error;
+      }
+    }
+
+    for (let j = 0; j < batch.length; j++) {
+      await saveEmbedding(batch[j].id, embeddings[j]);
+      processed++;
+    }
+  }
+
+  return {
+    processedChunks: processed,
+  };
+};
+
 module.exports = {
   generateEmbeddings,
+  processAllEmbeddings,
 };
+
