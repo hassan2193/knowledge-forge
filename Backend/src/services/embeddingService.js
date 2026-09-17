@@ -42,23 +42,32 @@ const processAllEmbeddings = async () => {
 
     let embeddings = null;
 
-    while (!embeddings) {
-      try {
-        embeddings = await generateEmbeddings(texts);
-      } catch (error) {
-        if (error.status === 429) {
-          console.log("Rate limit hit. Waiting 60 seconds...");
-          await sleep(60000);
-          continue;
-        }
+   while (!embeddings) {
+  try {
+    embeddings = await generateEmbeddings(texts);
 
-        throw error;
-      }
+    console.log(
+      `Generated ${embeddings.length} embeddings for Batch ${
+        Math.floor(i / batchSize) + 1
+      }`
+    );
+  } catch (error) {
+    if (error.status === 429) {
+      console.log("Rate limit hit. Waiting 60 seconds...");
+      await sleep(60000);
+      continue;
     }
+
+    throw error;
+  }
+}
 
     for (let j = 0; j < batch.length; j++) {
       await saveEmbedding(batch[j].id, embeddings[j]);
       processed++;
+
+      console.log(
+    `[${processed}/${chunks.length}] Saved Chunk ${batch[j].id}`);
     }
   }
 

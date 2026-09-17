@@ -1,5 +1,5 @@
 const {
-  getAllContent,
+  getContentWithoutChunks,
   saveChunks,
 } = require("./contentService");
 
@@ -31,10 +31,14 @@ const chunkContent = (content) => {
 };
 
 const processAllDocuments = async () => {
-  const documents = await getAllContent();
+  const documents = await getContentWithoutChunks();
 
   let processedDocuments = 0;
   let totalChunks = 0;
+
+  console.log(
+    `Found ${documents.length} unchunked documents`
+  );
 
   for (const document of documents) {
     const chunks = chunkContent(document.content);
