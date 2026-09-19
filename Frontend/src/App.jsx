@@ -5,6 +5,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import KnowledgeBase from "./pages/KnowledgeBase";
 import DocumentViewer from "./pages/DocumentViewer";
 import Sources from "./pages/Sources";
+import GenerateCourse from "./pages/GenerateCourse";
+import Lesson from "./pages/Lesson";
+import Quiz from "./pages/Quiz";
 
 function App() {
   return (
@@ -23,7 +26,22 @@ function App() {
   path="/admin/sources"
   element={<Sources />}
 />
+        
         <Route path="/creator" element={<h1>Creator Dashboard</h1>} />
+<Route
+  path="/creator/generate-course"
+  element={<GenerateCourse />}
+/>
+
+<Route
+  path="/creator/lessons/:id"
+  element={<Lesson />}
+/>
+
+<Route
+  path="/creator/quizzes/:id"
+  element={<Quiz />}
+/>
         <Route path="/student" element={<h1>Student Dashboard</h1>} />
       </Routes>
     </BrowserRouter>
